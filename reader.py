@@ -36,23 +36,24 @@ def load_ilash(addr,pos_dic):
             data = line.split('\t')
             count += 1
             flag = False
+            temp_item = [pos_dic[int(data[2])], pos_dic[int(data[3])],float(data[-1][:-2])]
             if data[0] in match_list:
                 if data[1] in match_list[data[0]]:
                     flag = True
-                    match_list[data[0]][data[1]].append([pos_dic[int(data[2])], pos_dic[int(data[3])]])
+                    match_list[data[0]][data[1]].append(temp_item)
 
             if (not flag) and data[1] in match_list:
                 if data[0] in match_list[data[1]]:
                     flag = True
-                    match_list[data[1]][data[0]].append([pos_dic[int(data[2])], pos_dic[int(data[3])]])
+                    match_list[data[1]][data[0]].append(temp_item)
             if not flag:
                 if data[0] in match_list:
-                    match_list[data[0]][data[1]] = [[pos_dic[int(data[2])], pos_dic[int(data[3])]]]
+                    match_list[data[0]][data[1]] = [temp_item]
                 elif data[1] in match_list:
-                    match_list[data[1]][data[0]] = [[pos_dic[int(data[2])], pos_dic[int(data[3])]]]
+                    match_list[data[1]][data[0]] = [temp_item]
                 else:
                     match_list[data[0]] = {}
-                    match_list[data[0]][data[1]] = [[pos_dic[int(data[2])], pos_dic[int(data[3])]]]
+                    match_list[data[0]][data[1]] = [temp_item]
 
 
     return match_list,count
@@ -94,6 +95,16 @@ def load_germline(addr,pos_dic):
                     match_list[id1][id2] = [[pos_dic[int(data[5])], pos_dic[int(data[6])]]]
 
     return match_list,count
+
+
+def write_to_csv(match_list,addr):
+    file = open(addr,'w')
+    for ind1, key1 in enumerate(match_list):
+        for ind2, key2 in enumerate(match_list[key1]):
+            file.write(','.join(str(i) for i in match_list[key1][key2])+'\n')
+
+def read_from_csv(addr):
+    return np.genfromtxt(addr,delimiter=',')
 
 def load_and_check_ilash(address, pos_dic,haps):
     total = 0
