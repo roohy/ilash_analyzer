@@ -107,7 +107,7 @@ def write_to_csv(match_list,addr):
     for ind1, key1 in enumerate(match_list):
         for ind2, key2 in enumerate(match_list[key1]):
             for item in match_list[key1][key2]:
-                file.write(','.join(str(i) for i in item)+'\n')
+                file.write(key1+ ',' + key2 + ',' + ','.join(str(i) for i in item)+'\n')
 
 def read_from_csv(addr):
     return np.genfromtxt(addr,delimiter=',')
