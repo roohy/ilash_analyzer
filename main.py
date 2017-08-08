@@ -1,5 +1,6 @@
 import reader,analyzer,config
-
+import matplotlib as mpl
+mpl.use('Agg') #helps with the X server not connected issue. 
 import matplotlib.pyplot as plt
 import numpy as np
 import gc
