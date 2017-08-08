@@ -18,14 +18,16 @@ def rewrite(cNum):
 
 def print_jaccards(addr):
     for i in range(1,23):
+        print "Chr #1"
         match_dic,count = get_jaccard(i)
-        temp_array = np.zeros((count))
+        temp_array = np.zeros((count),dtype="float")
         counter = 0
         for ind1,key1 in enumerate(match_dic):
             for ind2,key2 in enumerate(match_dic[key1]):
-                temp_array[counter] = match_dic[key1][key2][3]
-                counter += 1
-        plt.hist(temp_array, normed=True, bins=10)
+                for item in match_dic[key1][key2]:
+                    temp_array[counter] = item[3]
+                    counter += 1
+        plt.hist(temp_array, normed=True, bins=12)
         plt.ylabel("probability on Chr"+str(i))
         plt.savefig("fig"+str(i)+".png")
         reader.write_to_csv(match_dic,config.get_jacc_address(i))
