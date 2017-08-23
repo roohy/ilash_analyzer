@@ -1,6 +1,6 @@
 import reader,analyzer,config
 import matplotlib as mpl
-mpl.use('Agg') #helps with the X server not connected issue. 
+mpl.use('Agg') #helps with the X server not connected issue.
 import matplotlib.pyplot as plt
 import numpy as np
 import gc
@@ -23,7 +23,7 @@ def rewrite(cNum):
 
 def print_jaccards(addr):
     for i in range(1,23):
-        print "Chr #1"
+        print "Chr #"+str(i)
         match_dic,count = get_jaccard(i)
 
         temp_array = np.zeros((count),dtype="float")

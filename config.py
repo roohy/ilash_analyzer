@@ -1,4 +1,4 @@
-map_data_prefix = "PAGEII_Chr"
+map_data_prefix = "/lfs1/ibd/belbig01/for_jose-luis/PAGEII_Chr"
 map_data_suffix = ".phased.filtered.map3"
 hap_data_prefix = map_data_prefix
 hap_data_suffix = ".phased.filtered.ped"

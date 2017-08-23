@@ -24,6 +24,28 @@ def load_hap_data(hap_addr):
             meta[data[1] + '_1'] = data[0]
     return haps,meta
 
+def full_hap_loader_disjoint(base_addr,addr_suffix,count,base_map_addr,map_addr_suffix):
+    dna_length = 0
+    chr_bounds = {}
+    for i in range(1,23):
+        map_data = np.loadtxt(base_map_addr+str(i)+map_addr_suffix, skiprows=0,
+                              dtype={'names': ['chrom', 'RSID', 'gen_dist', 'position'],
+                                     'formats': ['i4', 'S10', 'f4', 'i4']})
+        chr_bounds[i] = (dna_length, dna_length + len(map_data))
+        dna_length += len(map_data)
+
+    dna_array = np.zeros((count,dna_length*2))
+    for i in range(1,23):
+        with open(base_map_addr) as file:
+            temp_count = 0
+            for line in file:
+                data = line.split()
+                dna_array[count,chr_bounds[i][0]:chr_bounds[i][1]] = np.array(data[6:]).astype(np.int)
+                temp_count += 1
+                if temp_count >= count:
+                    break
+    return dna_array
+
 
 def load_ilash(addr,pos_dic):
     count = 0
@@ -36,7 +58,7 @@ def load_ilash(addr,pos_dic):
             data = line.split('\t')
             count += 1
             flag = False
-            temp_item = [pos_dic[int(data[2])], pos_dic[int(data[3])],float(data[-1][:-3])]
+            temp_item = [pos_dic[int(data[2])], pos_dic[int(data[3])],float(data[-2]),float(data[-1])]
             if data[0] in match_list:
                 if data[1] in match_list[data[0]]:
                     flag = True
