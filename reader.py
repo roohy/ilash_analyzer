@@ -36,7 +36,7 @@ def full_hap_loader_disjoint(base_addr,addr_suffix,count,base_map_addr,map_addr_
 
     dna_array = np.zeros((count,dna_length*2))
     for i in range(1,23):
-        with open(base_map_addr) as file:
+        with open(base_addr+str(i)+addr_suffix) as file:
             temp_count = 0
             for line in file:
                 data = line.split()
