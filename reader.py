@@ -58,28 +58,28 @@ def load_ilash(addr,pos_dic):
             data = line.split('\t')
             count += 1
             flag = False
-            temp_item = [pos_dic[int(data[2])], pos_dic[int(data[3])],float(data[-2]),float(data[-1])]
-            if data[0] in match_list:
-                if data[1] in match_list[data[0]]:
+            temp_item = [pos_dic[int(data[5])], pos_dic[int(data[6])],float(data[-2]),float(data[-1])]
+            if data[1] in match_list:
+                if data[3] in match_list[data[1]]:
                     flag = True
-                    match_list[data[0]][data[1]].append(temp_item)
+                    match_list[data[1]][data[3]].append(temp_item)
                     continue
 
-            if (not flag) and data[1] in match_list:
-                if data[0] in match_list[data[1]]:
+            if (not flag) and data[3] in match_list:
+                if data[1] in match_list[data[3]]:
                     flag = True
-                    match_list[data[1]][data[0]].append(temp_item)
+                    match_list[data[3]][data[1]].append(temp_item)
                     continue
             if not flag:
-                if data[0] in match_list:
-                    match_list[data[0]][data[1]] = [temp_item]
+                if data[1] in match_list:
+                    match_list[data[1]][data[3]] = [temp_item]
                     continue
-                elif data[1] in match_list:
-                    match_list[data[1]][data[0]] = [temp_item]
+                elif data[3] in match_list:
+                    match_list[data[3]][data[1]] = [temp_item]
                     continue
                 else:
-                    match_list[data[0]] = {}
-                    match_list[data[0]][data[1]] = [temp_item]
+                    match_list[data[1]] = {}
+                    match_list[data[1]][data[3]] = [temp_item]
 
 
 

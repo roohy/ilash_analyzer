@@ -20,7 +20,15 @@ def rewrite(cNum):
     get_jaccard(cNum)
     reader.write_to_csv()
 
-
+def ibd_distro(match_list):
+    dic = []
+    for ind1, key1 in enumerate(match_list):
+            for ind2, key2 in enumerate(match_list[key1]):
+                total = 0
+                for i in range(len(match_list[key1][key2])):
+                    total += (match_list[key1][key2][i][1] - match_list[key1][key2][i][0])/350
+                dic.append(total)
+    return dic
 def print_jaccards(addr):
     for i in range(1,23):
         print "Chr #"+str(i)
@@ -40,12 +48,18 @@ def print_jaccards(addr):
         reader.write_to_csv(match_dic,config.get_jacc_address(i))
         gc.collect()
 
-
+def print_length()
 
 if __name__ == "__main__":
     print "Analyzer starting"
+    prob_res = []
     for i in range(1, 23):
+        
         map_data, pos_dic = reader.load_map_data(config.get_map_address(i))
+        match_dic,count = reader.load_ilash(config.get_iLash_address(cNum),pos_dic)
+        prob_res.append(ibd_distro(match_dic))
+
+
 
 
 
