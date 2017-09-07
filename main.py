@@ -4,6 +4,7 @@ mpl.use('Agg') #helps with the X server not connected issue.
 import matplotlib.pyplot as plt
 import numpy as np
 import gc
+import cPickle
 
 def get_jaccard(cNum):
     meta_data,pos_dic = reader.load_map_data(config.get_map_address(cNum))
@@ -58,6 +59,7 @@ if __name__ == "__main__":
         map_data, pos_dic = reader.load_map_data(config.get_map_address(i))
         match_dic,count = reader.load_ilash(config.get_iLash_address(cNum),pos_dic)
         prob_res.append(ibd_distro(match_dic))
+    cPickle.dump(prob_res,"wow")
 
 
 
