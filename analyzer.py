@@ -19,8 +19,8 @@ def simple_concordance(match_dic,ref_dic,map_data,threshold):
                 id1 = key2
                 id2 = key1
             if matched_couple:
-                temp_list = ref_dic[key1][key2]
-                if len(ref_dic[key1][key2]) > 1:
+                temp_list = ref_dic[id1][id2]
+                if len(ref_dic[id1][id2]) > 1:
                     temp_list.sort(key=lambda x: x[0])
                 for tract in match_dic[key1][key2]:
                     for item in temp_list:
