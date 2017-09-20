@@ -6,7 +6,7 @@ import numpy as np
 import gc
 import cPickle
 
-def get_jaccard(cNum):
+'''def get_jaccard(cNum):
     meta_data,pos_dic = reader.load_map_data(config.get_map_address(cNum))
     print "map file loaded."
     haps,meta = reader.load_hap_data(config.get_hap_address(cNum))
@@ -49,17 +49,27 @@ def print_jaccards(addr):
         reader.write_to_csv(match_dic,config.get_jacc_address(i))
         gc.collect()
 
-def print_length()
+def print_length()'''
 
 if __name__ == "__main__":
-    print "Analyzer starting"
+    output = open("concord_res",'w')
+    for i in range(1, 23):
+        print("chrom: "+str(i))
+        map_data, pos_dic = reader.load_map_data(config.get_map_address(i))
+        match_dic,count = reader.load_ilash(config.get_iLash_address(i),pos_dic)
+        germ_dic,germ_count = reader.load_germline(config.get_germline_address(i),pos_dic)
+        overlap_count7 = analyzer.simple_concordance(germ_dic,match_dic,map_data,0.7)
+        overlap_count1 =analyzer.simple_concordance(germ_dic,match_dic,map_data,1.0)
+        output.write(str(i)+'\t'+str(germ_count)+'\t'+str(count)+'\t'+str(overlap_count1)+'\t'+str(overlap_count7))
+
+    '''print "Analyzer starting"
     prob_res = []
     for i in range(1, 23):
         
         map_data, pos_dic = reader.load_map_data(config.get_map_address(i))
         match_dic,count = reader.load_ilash(config.get_iLash_address(cNum),pos_dic)
         prob_res.append(ibd_distro(match_dic))
-    cPickle.dump(prob_res,"wow")
+    cPickle.dump(prob_res,"wow")'''
 
 
 

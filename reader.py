@@ -17,7 +17,7 @@ def load_hap_data(hap_addr):
             data = line.split()
             temp_hap = np.array(data[6:])
             if data[1] + '_0' in haps:
-                print "wow we messed up"
+                print("wow we messed up")
             haps[data[1] + '_0'] = temp_hap[::2]
             haps[data[1] + '_1'] = temp_hap[1::2]
             meta[data[1] + '_0'] = data[0]
@@ -103,23 +103,24 @@ def load_germline(addr,pos_dic):
                 sign2 = '0'
             id1 = data[1][:-2] + '_' + sign
             id2 = data[3][:-2] + '_' + sign2
+            temp_item = [pos_dic[int(data[5])], pos_dic[int(data[6])],float(data[10])]
             if id1 in match_list:
                 if id2 in match_list[id1]:
                     flag = True
-                    match_list[id1][id2].append([pos_dic[int(data[5])], pos_dic[int(data[5])]])
+                    match_list[id1][id2].append(temp_item)
 
             if (not flag) and id2 in match_list:
                 if id1 in match_list[id2]:
                     flag = True
-                    match_list[id2][id1].append([pos_dic[int(data[5])], pos_dic[int(data[6])]])
+                    match_list[id2][id1].append(temp_item)
             if not flag:
                 if id1 in match_list:
-                    match_list[id1][id2] = [[pos_dic[int(data[5])], pos_dic[int(data[6])]]]
+                    match_list[id1][id2] = [temp_item]
                 elif id2 in match_list:
-                    match_list[id2][id1] = [[pos_dic[int(data[5])], pos_dic[int(data[6])]]]
+                    match_list[id2][id1] = [temp_item]
                 else:
                     match_list[id1] = {}
-                    match_list[id1][id2] = [[pos_dic[int(data[5])], pos_dic[int(data[6])]]]
+                    match_list[id1][id2] = [temp_item]
 
     return match_list,count
 
@@ -183,5 +184,5 @@ def load_and_check_ilash(address, pos_dic,haps):
                                 count += 1
         return total, true, cmCount, cmLen, match_list, count
     except:
-        print "Not Found"
+        print("Not Found")
         return 1, 0, 1, 1, {}, 1

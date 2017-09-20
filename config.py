@@ -3,14 +3,14 @@ map_data_suffix = ".phased.filtered.map3"
 hap_data_prefix = map_data_prefix
 hap_data_suffix = ".phased.filtered.ped"
 
-iLash_directory_prefix_300 = "../results_300/res_300"
+iLash_directory_prefix_300 = "../results_350/"
 iLash_directory_prefix_400 = "../results_400/"
 iLash_directory_prefix_500 = "../results_500/"
 iLash_directory_prefix_800 = "../results/"
 iLash_directory_prefix_1000 = "../results_1000/"
 
-iLash_data_prefix = "res"
-iLash_data_suffix = ".r"
+iLash_data_prefix = "result"
+iLash_data_suffix = ""
 
 germline_data_prefix = "/lfs1/ibd/belbig01/for_jose-luis/GERMLINE_OUT/PAGEII_Chr"
 germline_data_suffix = "_3cM.match"

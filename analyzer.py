@@ -9,19 +9,21 @@ def simple_concordance(match_dic,ref_dic,map_data,threshold):
     overlap_count = 0
     for ind1,key1 in enumerate(match_dic):
         for ind2,key2 in enumerate(match_dic[key1]):
-            for tract in match_dic[key1][key2]:
-
-                matched_couple = False
-                if key1 in ref_dic and key2 in ref_dic[key1]:
-                    matched_couple = True
-                    id1 = key1
-                    id2 = key2
-                elif key2 in ref_dic and key1 in ref_dic[key2]:
-                    matched_couple = True
-                    id1 = key2
-                    id2 = key1
-                if matched_couple:
-                    for item in match_dic[id1][id2]:
+            matched_couple = False
+            if key1 in ref_dic and key2 in ref_dic[key1]:
+                matched_couple = True
+                id1 = key1
+                id2 = key2
+            elif key2 in ref_dic and key1 in ref_dic[key2]:
+                matched_couple = True
+                id1 = key2
+                id2 = key1
+            if matched_couple:
+                temp_list = ref_dic[key1][key2]
+                if len(ref_dic[key1][key2]) > 1:
+                    temp_list.sort(key=lambda x: x[0])
+                for tract in match_dic[key1][key2]:
+                    for item in temp_list:
                         if item[0] > tract[1]:
                             break
                         if item[1] > tract[0]:
