@@ -47,7 +47,7 @@ def full_hap_loader_disjoint(base_addr,addr_suffix,count,base_map_addr,map_addr_
     return dna_array
 
 
-def load_ilash(addr,pos_dic):
+def load_ilash(addr,pos_dic,min_length=2.0 , min_acc = 0.0):
     count = 0
     match_list = {}
 
@@ -56,9 +56,11 @@ def load_ilash(addr,pos_dic):
     with open(addr) as iLash:
         for line in iLash:
             data = line.split('\t')
-            count += 1
             flag = False
             temp_item = [pos_dic[int(data[5])], pos_dic[int(data[6])],float(data[-2]),float(data[-1])]
+            if temp_item[2] < min_length or temp_item[3] < min_acc:
+                continue
+            count += 1
             if data[1] in match_list:
                 if data[3] in match_list[data[1]]:
                     flag = True
@@ -85,7 +87,7 @@ def load_ilash(addr,pos_dic):
 
     return match_list,count
 
-def load_germline(addr,pos_dic):
+def load_germline(addr,pos_dic, min_length=1.0):
     count = 0
     flag = False
     match_list = {}
@@ -93,7 +95,6 @@ def load_germline(addr,pos_dic):
         for line in germFile:
             flag = False
             data = line.split()
-            count += 1
             if data[1][-1] == '1':
                 sign = '1'
             else:
@@ -105,6 +106,9 @@ def load_germline(addr,pos_dic):
             id1 = data[1][:-2] + '_' + sign
             id2 = data[3][:-2] + '_' + sign2
             temp_item = [pos_dic[int(data[5])], pos_dic[int(data[6])],float(data[10])]
+            if temp_item[2] < min_length:
+                continue
+            count += 1
             if id1 in match_list:
                 if id2 in match_list[id1]:
                     flag = True

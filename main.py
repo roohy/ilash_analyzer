@@ -56,7 +56,7 @@ if __name__ == "__main__":
     for i in range(1, 23):
         print("chrom: "+str(i))
         map_data, pos_dic = reader.load_map_data(config.get_map_address(i))
-        match_dic,count = reader.load_ilash(config.get_iLash_address(i),pos_dic)
+        match_dic,count = reader.load_ilash(config.get_iLash_address(i),pos_dic,5,0.2)
         germ_dic,germ_count = reader.load_germline(config.get_germline_address(i),pos_dic)
         overlap_count7 = analyzer.simple_concordance(germ_dic,match_dic,map_data,0.7)
         overlap_count1 =analyzer.simple_concordance(germ_dic,match_dic,map_data,1.0)
