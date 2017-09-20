@@ -22,6 +22,7 @@ def simple_concordance(match_dic,ref_dic,map_data,threshold):
                 temp_list = ref_dic[id1][id2]
                 if len(ref_dic[id1][id2]) > 1:
                     temp_list.sort(key=lambda x: x[0])
+                    print(temp_list)
                 for tract in match_dic[key1][key2]:
                     for item in temp_list:
                         if item[0] > tract[1]:
@@ -31,6 +32,8 @@ def simple_concordance(match_dic,ref_dic,map_data,threshold):
                             end = min(item[1],tract[1])
                             if map_data[end][2]-map_data[start][2] > threshold:
                                 overlap_count += 1
+            else:
+                print("not matched as a couple!!!")
     return overlap_count
 
 def add_concordance(match_dic,ref_dic,map_data,threshold):

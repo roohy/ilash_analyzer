@@ -3,7 +3,7 @@ map_data_suffix = ".phased.filtered.map3"
 hap_data_prefix = map_data_prefix
 hap_data_suffix = ".phased.filtered.ped"
 
-iLash_directory_prefix_300 = "../results_350/"
+iLash_directory_prefix_300 = "/lfs1/ibd/results_350/"
 iLash_directory_prefix_400 = "../results_400/"
 iLash_directory_prefix_500 = "../results_500/"
 iLash_directory_prefix_800 = "../results/"
