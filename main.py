@@ -60,7 +60,7 @@ if __name__ == "__main__":
         germ_dic,germ_count = reader.load_germline(config.get_germline_address(i),pos_dic)
         overlap_count7 = analyzer.simple_concordance(germ_dic,match_dic,map_data,0.7)
         overlap_count1 =analyzer.simple_concordance(germ_dic,match_dic,map_data,1.0)
-        output.write(str(i)+'\t'+str(germ_count)+'\t'+str(count)+'\t'+str(overlap_count1)+'\t'+str(overlap_count7))
+        output.write(str(i)+'\t'+str(germ_count)+'\t'+str(count)+'\t'+str(overlap_count1)+'\t'+str(overlap_count7)+'\n')
 
     '''print "Analyzer starting"
     prob_res = []
