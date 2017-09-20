@@ -91,6 +91,7 @@ def load_germline(addr,pos_dic):
     match_list = {}
     with open(addr) as germFile:
         for line in germFile:
+            flag = False
             data = line.split()
             count += 1
             if data[1][-1] == '1':

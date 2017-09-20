@@ -4,7 +4,7 @@ mpl.use('Agg') #helps with the X server not connected issue.
 import matplotlib.pyplot as plt
 import numpy as np
 import gc
-import cPickle
+
 
 '''def get_jaccard(cNum):
     meta_data,pos_dic = reader.load_map_data(config.get_map_address(cNum))
