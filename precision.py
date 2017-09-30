@@ -28,7 +28,7 @@ if __name__ == '__main__':
                             correct_ones += 1
                         else:
                             false_ones += 1
-                    data[10] = correct_ones/(correct_ones+false_ones)
+                    data[10] = str(correct_ones/(correct_ones+false_ones))
                 outfile.write('\t'.join(data)+'\n')
             outfile.close()
         
