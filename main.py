@@ -4,6 +4,7 @@ mpl.use('Agg') #helps with the X server not connected issue.
 import matplotlib.pyplot as plt
 import numpy as np
 import gc
+import sys,os
 
 
 '''def get_jaccard(cNum):
@@ -52,12 +53,13 @@ def print_jaccards(addr):
 def print_length()'''
 
 if __name__ == "__main__":
+    
     output = open("concord_res",'w')
     for i in range(1, 23):
         print("chrom: "+str(i))
         map_data, pos_dic = reader.load_map_data(config.get_map_address(i))
         match_dic,count = reader.load_ilash(config.get_iLash_address(i),pos_dic,5,0.2)
-        germ_dic,germ_count = reader.load_germline(config.get_germline_address(i),pos_dic)
+        germ_dic,germ_count = reader.load_germline(config.get_germline_address(i),pos_dic,5)
         overlap_count7 = analyzer.simple_concordance(germ_dic,match_dic,map_data,0.7)
         overlap_count1 =analyzer.simple_concordance(germ_dic,match_dic,map_data,1.0)
         output.write(str(i)+'\t'+str(germ_count)+'\t'+str(count)+'\t'+str(overlap_count1)+'\t'+str(overlap_count7)+'\n')
