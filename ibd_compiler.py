@@ -404,7 +404,7 @@ def load_rapid_for_power(addr,map_data,pos_dic, min_length):
                 match_dic[id2][id1] = [temp_item]
             else:
                 match_dic[id1] = {}
-                match_dic[id2][id2] = [temp_item]
+                match_dic[id1][id2] = [temp_item]
 
     return match_dic,count,total_length
 
