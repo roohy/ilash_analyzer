@@ -1,5 +1,5 @@
 import numpy as np
-
+dt = np.dtype('uint8')
 def load_map_data(map_addr):
     map_data = np.loadtxt(map_addr, skiprows=0,
                           dtype={'names': ['chrom', 'RSID', 'gen_dist', 'position'],
