@@ -1,7 +1,7 @@
 import numpy as np 
 import gzip
 import sys
-from scipy.stats import itemfreq
+from scipy import stats
 
 dt = np.dtype('U1') 
 translate = True
@@ -25,7 +25,13 @@ def line_counter(pedAddr):
 
 def translator(dna_mat):
     for i in range(dna_mat.shape[0]):
-
+        stat = stats.itemfreq(dna_mat[i,:])
+        if stat.shape[0] < 2:
+            dna_mat[i,:] = 1
+            continue
+        else:
+            first_ind = 
+            if stat[0,1]>stat[1,1]:
 
 
 if __name__ == "__main__":

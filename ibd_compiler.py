@@ -1,5 +1,5 @@
 import numpy as np
-from reader import load_map_data
+
 dt = np.dtype('uint8')
 def load_meta(legendAddr, distsAddr):
     legend = np.loadtxt(legendAddr, skiprows=1, dtype=
@@ -373,9 +373,45 @@ def load_germline_for_power(addr,pos_dic, min_length=1.0):
 
     return match_list,count,total_length
 
+def load_rapid_for_power(addr,map_data,pos_dic, min_length):
+    count = 0
+    total_length = 0
+    match_dic = {}
+    with open(addr) as results:
+        for line in results:
+            flag = False
+            data = line.strip().split()
+            id1 = int(data[1])
+            id2 = int(data[2])
+            length = map_data[pos_dic[int(data[4])]][2]-map_data[pos_dic[int(data[3])]][2]
+            temp_item = [pos_dic[int(data[3])],pos_dic[int(data[4])], length]
+            if length < min_length:
+                continue
+            count += 1
+            total_length += length
+            if id1 in match_dic:
+                if id2 in match_dic[id1]:
+                    
+                    match_dic[id1][id2].append(temp_item)
+                    continue
+            if id2 in match_dic:
+                if id1 in match_dic[id2]:
+                    match_dic[id2][id1].append(temp_item)
+                    continue
+            if id1 in match_dic:
+                match_dic[id1][id2] = [temp_item]
+            elif id2 in match_dic:
+                match_dic[id2][id1] = [temp_item]
+            else:
+                match_dic[id1] = {}
+                match_dic[id2][id2] = [temp_item]
+
+    return match_dic,count,total_length
+
+    pass
 
 def check_sim_ibd(fam_dic,match_dic):
-    found 
+    
     for ind1,p1 in enumerate(fam_dic):
         for ind2,p2 in enumerate(fam_dic[p1]):
             if p1 in match_dic:

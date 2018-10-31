@@ -36,7 +36,7 @@ def simple_concordance(match_dic,ref_dic,map_data,threshold):
                 pass
     return overlap_count
 
-def write_concordance(ref_dict,dict_list, name_list,map_data,hap_count,dict_size,output_address):
+def write_concordance(ref_dict,dict_list, name_list,map_data,hap_count,dict_size,output_address,rapid_ind=-1):
     output = open(output_address,'w')
     covered_length_list = np.zeros((len(name_list)))
     handles = []
@@ -61,11 +61,21 @@ def write_concordance(ref_dict,dict_list, name_list,map_data,hap_count,dict_size
                     tkey1 = key1+(i*dict_size)
                     tkey2 = key2+(i*dict_size)
                     temp_list = None
-                    if tkey1 in dict_list[res_ind] and tkey2 in dict_list[res_ind][tkey1]:
-                        temp_list = dict_list[res_ind][tkey1][tkey2]
-                    elif tkey2 in dict_list[res_ind] and tkey1 in dict_list[res_ind][tkey2]:
-                        temp_list = dict_list[res_ind][tkey2][tkey1]
+                    if rapid_ind != res_ind:
                     
+                        if tkey1 in dict_list[res_ind] and tkey2 in dict_list[res_ind][tkey1]:
+                            temp_list = dict_list[res_ind][tkey1][tkey2]
+                        elif tkey2 in dict_list[res_ind] and tkey1 in dict_list[res_ind][tkey2]:
+                            temp_list = dict_list[res_ind][tkey2][tkey1]
+                    
+                    else:
+                        rtkey1 = tkey1//2
+                        rtkey2 = tkey2//2
+                        if rtkey1 in dict_list[res_ind] and rtkey2 in dict_list[res_ind][rtkey1]:
+                            temp_list = dict_list[res_ind][rtkey1][rtkey2]
+                        elif rtkey2 in dict_list[res_ind] and rtkey1 in dict_list[res_ind][rtkey2]:
+                            temp_list = dict_list[res_ind][rtkey2][rtkey1]
+                        
                     if temp_list is not None:
                         if len(temp_list) > 1:
                             temp_list.sort(key=lambda x: x[0])
