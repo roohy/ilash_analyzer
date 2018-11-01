@@ -408,7 +408,44 @@ def load_rapid_for_power(addr,map_data,pos_dic, min_length):
 
     return match_dic,count,total_length
 
-    pass
+def load_ilash_length(address, pos_dic):
+    count = 0
+    total_length = 0
+    with open(address) as iLash:
+        for line in iLash:
+            data = line.split('\t')
+            flag = False
+            temp_item = float(data[-2])
+            count += 1
+            total_length += temp_item
+    return count,total_length
+
+def load_germline_length(address,pos_dic):
+    count = 0
+    total_length = 0
+    with open(address) as germFile:
+        for line in germFile:
+            
+            data = line.split()
+            
+            temp_item =float(data[10])
+            count += 1
+            total_length += temp_item
+    return count,total_length
+
+def load_rapid_length(address,pos_dic,map_data):
+    count = 0 
+    total_length = 0 
+    with open(address) as inputfile:
+        for line in inputfile:
+            data = line.split()
+
+            length = map_data[pos_dic[int(data[4])]][2]-map_data[pos_dic[int(data[3])]][2]
+            count += 1 
+            total_length += length
+    return count,total_length
+    
+
 
 def check_sim_ibd(fam_dic,match_dic):
     
