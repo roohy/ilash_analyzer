@@ -148,13 +148,13 @@ def add_jaccard_to_dic(match_dic,hap_data,shingler,shingle_size,overlap):
                 tract.append(jaccard_similarity_score(shingler(hap_data[key1][tract[0]:tract[1]],shingle_size,overlap),shingler(hap_data[key2][tract[0]:tract[1]],shingle_size,overlap)))
 
 
-def load_check_rapid(hap_data,map_data,pos_dic,input_addr,output_addr):
-    flag = False
+def load_check_rapid(hap_data,map_data,pos_dic,input_addr):
+    output_addr = './fd'
     prefixes = ['_0','_1']
     count = 0 
     length = 0.0
     with open(input_addr) as tracts_file:
-        with open(output_addr) as output_file:
+        with open(output_addr,'w') as output_file:
             for line in tracts_file:
                 data = line.strip().split()
                 start_pos = pos_dic[int(data[3])]
