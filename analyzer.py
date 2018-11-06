@@ -148,3 +148,30 @@ def add_jaccard_to_dic(match_dic,hap_data,shingler,shingle_size,overlap):
                 tract.append(jaccard_similarity_score(shingler(hap_data[key1][tract[0]:tract[1]],shingle_size,overlap),shingler(hap_data[key2][tract[0]:tract[1]],shingle_size,overlap)))
 
 
+def load_check_rapid(hap_data,map_data,pos_dic,input_addr,output_addr):
+    flag = False
+    prefixes = ['_0','_1']
+    count = 0 
+    length = 0.0
+    with open(input_addr) as tracts_file:
+        with open(output_addr) as output_file:
+            for line in tracts_file:
+                data = line.strip().split()
+                start_pos = pos_dic[int(data[3])]
+                end_pos = pos_dic[int(data[4])]
+                if hap_data[data[1]+prefixes[0]][start_pos:end_pos] == hap_data[data[2]+prefixes[0]][start_pos:end_pos]:
+                    continue
+                elif hap_data[data[1]+prefixes[0]][start_pos:end_pos] == hap_data[data[2]+prefixes[1]][start_pos:end_pos]:
+                    continue
+                elif hap_data[data[1]+prefixes[1]][start_pos:end_pos] == hap_data[data[2]+prefixes[0]][start_pos:end_pos]:
+                    continue
+                elif hap_data[data[1]+prefixes[1]][start_pos:end_pos] == hap_data[data[2]+prefixes[1]][start_pos:end_pos]:
+                    continue
+                else:
+                    count += 1 
+                    length += map_data[end_pos][2]-map_data[start_pos][2]
+    return count,length
+
+
+
+
