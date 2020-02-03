@@ -160,10 +160,13 @@ def load_check_rapid(hap_data,map_data,pos_dic,input_addr):
                 start_pos = pos_dic[int(data[3])]
                 end_pos = pos_dic[int(data[4])]
                 if (hap_data[data[1]+prefixes[0]][start_pos:end_pos] == hap_data[data[2]+prefixes[0]][start_pos:end_pos]).all():
+                    
                     continue
                 elif (hap_data[data[1]+prefixes[0]][start_pos:end_pos] == hap_data[data[2]+prefixes[1]][start_pos:end_pos]).all():
+
                     continue
                 elif (hap_data[data[1]+prefixes[1]][start_pos:end_pos] == hap_data[data[2]+prefixes[0]][start_pos:end_pos]).all():
+
                     continue
                 elif (hap_data[data[1]+prefixes[1]][start_pos:end_pos] == hap_data[data[2]+prefixes[1]][start_pos:end_pos]).all():
                     continue
@@ -172,6 +175,27 @@ def load_check_rapid(hap_data,map_data,pos_dic,input_addr):
                     length += map_data[end_pos][2]-map_data[start_pos][2]
     return count,length
 
+'''
+def load_check_rapid(hap_data,map_data,pos_dic,input_addr,output_addr):
+    
+    prefixes = ['_0','_1']
+    count = 0 
+    length = 0.0
+    scores = np.zeros((4))
+    with open(input_addr) as tracts_file:
+        with open(output_addr,'w') as output_file:
+            for line in tracts_file:
+                data = line.strip().split()
+                start_pos = pos_dic[int(data[3])]
+                end_pos = pos_dic[int(data[4])]
+                scores[0] = (hap_data[data[1]+prefixes[0]][start_pos:end_pos] == hap_data[data[2]+prefixes[0]][start_pos:end_pos]).sum()
+                scores[1] = (hap_data[data[1]+prefixes[0]][start_pos:end_pos] == hap_data[data[2]+prefixes[1]][start_pos:end_pos]).sum()
+                scores[2] = (hap_data[data[1]+prefixes[1]][start_pos:end_pos] == hap_data[data[2]+prefixes[0]][start_pos:end_pos]).sum()
+                scores[] = (hap_data[data[1]+prefixes[1]][start_pos:end_pos] == hap_data[data[2]+prefixes[1]][start_pos:end_pos]).sum()
+
+                count += 1 
+                length += map_data[end_pos][2]-map_data[start_pos][2]
+    return count,length
 
 
-
+'''
