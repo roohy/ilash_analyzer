@@ -327,6 +327,46 @@ def load_ilash_for_power(file_name,pos_dic,min_length=1.0,min_acc=0.0):
 
     return match_list,count,total_length
 
+def load_beagle_for_power(addr,pos_dic,map_data, min_length=2.75):
+    count = 0 
+    flag = False
+    total_length = 0
+    match_list = {}
+    with open(addr) as beagleIBD:
+        for line in beagleIBD:
+            flag = False
+            data = line.stript().split()
+            start_dist = map_data[pos_dic[int(data[5])]][2]
+            end_dist = map_data[pos_dic[int(data[6])]][2]
+            genetic_dist = end_dist-start_dist
+            if genetic_dist < min_length:
+                continue
+            id1 = int(data[0][2:])
+            id2 = int(data[2][2:])
+            sign1 = 0 if data[1] == 1 else 1
+            sign2 = 0 if data[3] == 1 else 1
+            id1 = id1*2 + sign1
+            id2 = id2*2 + sign2
+            temp_item = [pos_dic[int(data[5])],pos_dic[int(data[6])],genetic_dist]
+            count += 1 
+            total_length += genetic_dist
+            if id1 in match_list:
+                if id2 in match_list[id1]:
+                    flag = True
+                    match_list[id1][id2].append(temp_item)
+            if (not flag) and id2 in match_list:
+                if id1 in match_list[id2]:
+                    match_list[id2][id1].append(temp_item)
+            if not flag:
+                if id1 in match_list:
+                    match_list[id1][id2] = [temp_item]
+                elif id2 in match_list:
+                    match_list[id2][id1] = [temp_item]
+                else:
+                    match_list[id1] = {}
+                    match_list[id1][id2] = [temp_item]
+    return match_list,count,total_length
+
 
 
 def load_germline_for_power(addr,pos_dic, min_length=1.0):
@@ -444,6 +484,22 @@ def load_rapid_length(address,pos_dic,map_data):
             count += 1 
             total_length += length
     return count,total_length
+
+def load_beagle_length(addr,pos_dic,map_data, min_length=2.75):
+    count = 0 
+    total_length = 0
+    with open(addr) as beagleIBD:
+        for line in beagleIBD:
+            flag = False
+            data = line.stript().split()
+            start_dist = map_data[pos_dic[int(data[5])]][2]
+            end_dist = map_data[pos_dic[int(data[6])]][2]
+            genetic_dist = end_dist-start_dist
+            if genetic_dist < min_length:
+                continue
+            count += 1 
+            total_length += genetic_dist
+    return total_length,genetic_dist
     
 
 
