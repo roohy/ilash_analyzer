@@ -490,7 +490,6 @@ def load_beagle_length(addr,pos_dic,map_data, min_length=2.75):
     total_length = 0
     with open(addr) as beagleIBD:
         for line in beagleIBD:
-            flag = False
             data = line.strip().split()
             start_dist = map_data[pos_dic[int(data[5])]][2]
             end_dist = map_data[pos_dic[int(data[6])]][2]
@@ -499,7 +498,7 @@ def load_beagle_length(addr,pos_dic,map_data, min_length=2.75):
                 continue
             count += 1 
             total_length += genetic_dist
-    return total_length,genetic_dist
+    return count,total_length
     
 
 
