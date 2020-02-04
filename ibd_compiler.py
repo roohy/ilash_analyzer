@@ -335,7 +335,7 @@ def load_beagle_for_power(addr,pos_dic,map_data, min_length=2.75):
     with open(addr) as beagleIBD:
         for line in beagleIBD:
             flag = False
-            data = line.stript().split()
+            data = line.strip().split()
             start_dist = map_data[pos_dic[int(data[5])]][2]
             end_dist = map_data[pos_dic[int(data[6])]][2]
             genetic_dist = end_dist-start_dist
@@ -491,7 +491,7 @@ def load_beagle_length(addr,pos_dic,map_data, min_length=2.75):
     with open(addr) as beagleIBD:
         for line in beagleIBD:
             flag = False
-            data = line.stript().split()
+            data = line.strip().split()
             start_dist = map_data[pos_dic[int(data[5])]][2]
             end_dist = map_data[pos_dic[int(data[6])]][2]
             genetic_dist = end_dist-start_dist
