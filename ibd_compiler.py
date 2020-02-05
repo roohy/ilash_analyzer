@@ -327,7 +327,7 @@ def load_ilash_for_power(file_name,pos_dic,min_length=1.0,min_acc=0.0):
 
     return match_list,count,total_length
 
-def load_beagle_for_power(addr,pos_dic,map_data, min_length=2.75):
+def load_beagle_for_power(addr,pos_dic,map_data, min_length=2.75,diploid=True):
     count = 0 
     flag = False
     total_length = 0
@@ -343,10 +343,11 @@ def load_beagle_for_power(addr,pos_dic,map_data, min_length=2.75):
                 continue
             id1 = int(data[0][2:])
             id2 = int(data[2][2:])
-            sign1 = 0 if data[1] == 1 else 1
-            sign2 = 0 if data[3] == 1 else 1
-            id1 = id1*2 + sign1
-            id2 = id2*2 + sign2
+            if not diploid:
+                sign1 = 0 if data[1] == 1 else 1
+                sign2 = 0 if data[3] == 1 else 1
+                id1 = id1*2 + sign1
+                id2 = id2*2 + sign2
             temp_item = [pos_dic[int(data[5])],pos_dic[int(data[6])],genetic_dist]
             count += 1 
             total_length += genetic_dist
@@ -366,7 +367,6 @@ def load_beagle_for_power(addr,pos_dic,map_data, min_length=2.75):
                     match_list[id1] = {}
                     match_list[id1][id2] = [temp_item]
     return match_list,count,total_length
-
 
 
 def load_germline_for_power(addr,pos_dic, min_length=1.0):

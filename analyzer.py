@@ -38,7 +38,7 @@ def simple_concordance(match_dic,ref_dic,map_data,threshold):
 
 def write_concordance(ref_dict,dict_list, name_list,map_data,hap_count,dict_size,output_address,rapid_ind=-1):
     output = open(output_address,'w')
-    covered_length_list = np.zeros((len(name_list)))
+    #covered_length_list = np.zeros((len(name_list)))
     handles = []
     output.write("hap_num_1\thap_num_2\tStart\tend\tlength")
     for item in name_list:
@@ -46,7 +46,7 @@ def write_concordance(ref_dict,dict_list, name_list,map_data,hap_count,dict_size
         handles.append(None)
     output.write('\n')
 
-    matched_couple = False
+    #matched_couple = False
     dict_to_travers = hap_count//dict_size
     if hap_count%dict_size == 0 :
         dict_to_travers -= 1 
