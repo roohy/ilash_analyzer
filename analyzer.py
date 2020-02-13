@@ -35,6 +35,50 @@ def simple_concordance(match_dic,ref_dic,map_data,threshold):
             else:
                 pass
     return overlap_count
+def individual_comparison(ref_dict,dict_list,map_data,hap_count,dict_size,output_address,rapid_ind=-1):
+    result = []
+    dict_to_travers = hap_count//dict_size
+    if hap_count%dict_size == 0 :
+        dict_to_travers -= 1 
+    for i in range(dict_to_travers+1):
+        for key1 in ref_dict[i]:
+            if key1+(i*dict_size) > hap_count:
+                continue
+            for key2 in ref_dict[i][key1]:
+                if key2+(i*dict_size) > hap_count:
+                    continue
+                total_pair_length = 0
+                temp_res_item = []
+                for tract in ref_dict[i][key1][key2]:
+                    total_pair_length += map_data[tract[1]][2]-map_data[tract[0]][2]
+                temp_res_item.append(total_pair_length)
+                for res_ind in range(len(dict_list)):
+                    tkey1 = key1+(i*dict_size)
+                    tkey2 = key2+(i*dict_size)
+                    temp_list = None
+                    if rapid_ind != res_ind:
+                    
+                        if tkey1 in dict_list[res_ind] and tkey2 in dict_list[res_ind][tkey1]:
+                            temp_list = dict_list[res_ind][tkey1][tkey2]
+                        elif tkey2 in dict_list[res_ind] and tkey1 in dict_list[res_ind][tkey2]:
+                            temp_list = dict_list[res_ind][tkey2][tkey1]
+                    
+                    else:
+                        rtkey1 = tkey1//2
+                        rtkey2 = tkey2//2
+                        if rtkey1 in dict_list[res_ind] and rtkey2 in dict_list[res_ind][rtkey1]:
+                            temp_list = dict_list[res_ind][rtkey1][rtkey2]
+                        elif rtkey2 in dict_list[res_ind] and rtkey1 in dict_list[res_ind][rtkey2]:
+                            temp_list = dict_list[res_ind][rtkey2][rtkey1]
+                    total_pair_handle = 0    
+                    if temp_list is not None:
+                        for tract in temp_list:
+                            total_pair_handle += map_data[tract[1]][2]-map_data[tract[0]][2]
+                    temp_res_item.append(total_pair_handle)
+                result.append(temp_res_item)  
+    return result
+                
+                
 
 def write_concordance(ref_dict,dict_list, name_list,map_data,hap_count,dict_size,output_address,rapid_ind=-1):
     output = open(output_address,'w')
