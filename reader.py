@@ -8,7 +8,17 @@ def load_map_data(map_addr):
     for item in range(len(map_data)):
         pos_dic[map_data[item][3]] = item
     return map_data, pos_dic
-
+def fix_map(mapData):
+    lastVal = 0
+    for i in range(1,len(mapData)):
+        if mapData[i-1][2] > mapData[i][2]:
+            mapData[i-1][2] = (mapData[i][2]+mapData[i-2][2])/2
+        lastVal = mapData[i][2]
+    return mapData
+def save_map(mapAddr,mapArray):
+        with open(mapAddr,'w') as mapFile:
+            for mapItem in mapArray:
+                mapFile.write('\t'.join([str(item) for item in mapItem])+'\n')
 def load_hap_data(hap_addr):
     haps = {}
     meta = {}
