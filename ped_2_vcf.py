@@ -14,7 +14,7 @@ if __name__ == '__main__':
     pedAddr = sys.argv[1]
     mapAddr = sys.argv[2]
     vcfAddr = sys.argv[3]
-    sampleCount = sys.argv[4]
+    sampleCount = int(sys.argv[4])
     mapData,posDict = load_map_data(mapAddr)
     IDList = []
     SNPCount = len(mapData)
@@ -32,7 +32,7 @@ if __name__ == '__main__':
         vcfFile.write('\t'.join(fields+IDList)+'\n')
         for i in range(SNPCount):
             vcfFile.write('\t'.join([str(mapData[i][0]),str(mapData[i][3]),
-                mapData[i][1],'C','A','.','.','PR','GT'])+'\t')
+                mapData[i][1].decode('UTF-8'),'C','A','.','.','PR','GT'])+'\t')
             vcfFile.write('\t'.join(haps[i,:])+'\n')
     
         
