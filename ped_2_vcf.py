@@ -26,7 +26,7 @@ if __name__ == '__main__':
             data = sample.strip().split()
             IDList.append(data[1])
             for j in range(SNPCount):
-                haps[j,i] = data[6+(j*2)]+'/'+data[7+(j*2)]
+                haps[j,i] = data[6+(j*2)]+'|'+data[7+(j*2)]
     with open(vcfAddr,'w') as vcfFile:
         vcfFile.write('\n'.join(lines)+'\n')
         vcfFile.write('\t'.join(fields+IDList)+'\n')
