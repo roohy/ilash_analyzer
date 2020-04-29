@@ -28,8 +28,8 @@ if __name__ == '__main__':
             IDList.append(data[1])
             if plinkFlag == 1:
                 for j in range(len(data[6:])):
-                    if data[6+j] == 2:
-                        data[6+j] = 0
+                    if data[6+j] == '2':
+                        data[6+j] = '0'
             for j in range(SNPCount):
                 haps[j,i] = data[6+(j*2)]+'|'+data[7+(j*2)]
     with open(vcfAddr,'w') as vcfFile:
