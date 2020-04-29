@@ -369,6 +369,48 @@ def load_beagle_for_power(addr,pos_dic,map_data, min_length=2.75,diploid=True):
     return match_list,count,total_length
 
 
+def load_ribd_for_power(file_name,pos_dic,min_length=1.0):
+    
+    count = 0
+    match_list = {}
+    total_length = 0
+    flag = False
+    with open(file_name) as ribdFile:
+        for line in ribdFile:
+            data = line.split('\t')
+            flag = False
+            temp_item = [pos_dic[int(data[5])], pos_dic[int(data[6])],float(data[-1])]
+            if temp_item[2] < min_length:
+                continue
+            count += 1
+            total_length += temp_item[2]
+            data[1] = int(data[0])*2 + int(data[1])-1
+            data[3] = int(data[2])*2 + int(data[3])-1
+            
+            if data[1] in match_list:
+                if data[3] in match_list[data[1]]:
+                    flag = True
+                    match_list[data[1]][data[3]].append(temp_item)
+                    continue
+
+            if (not flag) and data[3] in match_list:
+                if data[1] in match_list[data[3]]:
+                    flag = True
+                    match_list[data[3]][data[1]].append(temp_item)
+                    continue
+            if not flag:
+                if data[1] in match_list:
+                    match_list[data[1]][data[3]] = [temp_item]
+                    continue
+                elif data[3] in match_list:
+                    match_list[data[3]][data[1]] = [temp_item]
+                    continue
+                else:
+                    match_list[data[1]] = {}
+                    match_list[data[1]][data[3]] = [temp_item]
+
+    return match_list,count,total_length
+
 def load_germline_for_power(addr,pos_dic, min_length=1.0):
     count = 0
     flag = False
