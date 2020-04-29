@@ -15,6 +15,7 @@ if __name__ == '__main__':
     mapAddr = sys.argv[2]
     vcfAddr = sys.argv[3]
     sampleCount = int(sys.argv[4])
+    plinkFlag = int(sys.argv[5])
     mapData,posDict = load_map_data(mapAddr)
     IDList = []
     SNPCount = len(mapData)
@@ -25,6 +26,10 @@ if __name__ == '__main__':
             sample = pedFile.readline()
             data = sample.strip().split()
             IDList.append(data[1])
+            if plinkFlag == 1:
+                for i in range(len(data[6:])):
+                    if data[6+i] == 2:
+                        data[6+i] = 0
             for j in range(SNPCount):
                 haps[j,i] = data[6+(j*2)]+'|'+data[7+(j*2)]
     with open(vcfAddr,'w') as vcfFile:
