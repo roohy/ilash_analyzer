@@ -501,6 +501,17 @@ def load_ilash_length(address, pos_dic):
             count += 1
             total_length += temp_item
     return count,total_length
+def load_ribd_length(address, pos_dic):
+    count = 0
+    total_length = 0
+    with open(address) as ribdFile:
+        for line in ribdFile:
+            data = line.split('\t')
+            flag = False
+            temp_item = float(data[-1])
+            count += 1
+            total_length += temp_item
+    return count,total_length
 
 def load_germline_length(address,pos_dic):
     count = 0
