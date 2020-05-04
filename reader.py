@@ -13,11 +13,11 @@ def fix_map(mapData):
     while i < len(mapData)-1:
         if mapData[i+1][2] < mapData[i][2]:
             j = i+2
-            while mapData[j][2] < mapData[i][2]:
+            while mapData[j][2] <= mapData[i][2]:
                 j+=1
             step = (mapData[j][2]-mapData[i][2])/(j-i)
             for k in range(i+1,j):
-                mapData[k][2] = mapData[i][2]+(k-i)*step
+                mapData[k][2] = mapData[i][2]+((k-i)*step)
             i = j
         else:
             i += 1
