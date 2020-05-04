@@ -3,7 +3,7 @@ dt = np.dtype('uint8')
 def load_map_data(map_addr):
     map_data = np.loadtxt(map_addr, skiprows=0,
                           dtype={'names': ['chrom', 'RSID', 'gen_dist', 'position'],
-                                 'formats': ['i4', 'S10', 'f4', 'i4']})
+                                 'formats': ['i4', 'S20', 'f4', 'i4']}) #TODO:Change back to S10
     pos_dic = {}
     for item in range(len(map_data)):
         pos_dic[map_data[item][3]] = item
@@ -11,7 +11,7 @@ def load_map_data(map_addr):
 def remove_nan(mapData):
     for i in range(len(mapData)):
         mapData[i][1] = mapData[i][1][2:-1]
-        if mapData[i][2] == 'nan':
+        if np.isnan(mapData[i][2]):
             print('Found one')
             mapData[i][2] = (mapData[i+1][2]+mapData[i-1][2])/2
     return mapData
