@@ -9,14 +9,18 @@ def load_map_data(map_addr):
         pos_dic[map_data[item][3]] = item
     return map_data, pos_dic
 def fix_map(mapData):
-    lastVal = 0
-    i = 3
-    while i < len(mapData):
-        if mapData[i-1][2] > mapData[i][2]:
-            mapData[i][2] = (mapData[i+1][2]+mapData[i-1][2])/2
-            i -= 3
-        lastVal = mapData[i][2]
-        i += 1
+    i = 0
+    while i < len(mapData)-1:
+        if mapData[i+1][2] < mapData[i][2]:
+            j = i+2
+            while mapData[j][2] < mapData[i][2]:
+                j+=1
+            step = (mapData[j][2]-mapData[i][2])/(j-i)
+            for k in range(i+1,j):
+                mapData[k][2] = mapData[i][2]+(k-i)*step
+            i = j
+        else:
+            i += 1
     return mapData
 def save_map(mapAddr,mapArray):
         with open(mapAddr,'w') as mapFile:
