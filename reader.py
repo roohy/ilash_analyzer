@@ -33,7 +33,7 @@ def fix_map(mapData):
 def save_map(mapAddr,mapArray):
         with open(mapAddr,'w') as mapFile:
             for mapItem in mapArray:
-                mapFile.write('\t'.join([str(mapItem[0]),mapItem[1].decode('unicode'),
+                mapFile.write('\t'.join([str(mapItem[0]),mapItem[1].decode('utf-8'),
                     str(mapItem[2]),str(mapItem[3])])+'\n')
 def load_hap_data(hap_addr):
     haps = {}
