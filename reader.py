@@ -8,7 +8,15 @@ def load_map_data(map_addr):
     for item in range(len(map_data)):
         pos_dic[map_data[item][3]] = item
     return map_data, pos_dic
+def remove_nan(mapData):
+    for i in range(len(mapData)):
+        mapData[i][1] = mapData[i][1][2:-1]
+        if mapData[i][2] == 'nan':
+            print('Found one')
+            mapData[i][2] = (mapData[i+1][2]+mapData[i-1][2])/2
+    return mapData
 def fix_map(mapData):
+    mapData = remove_nan(mapData)
     i = 0
     while i < len(mapData)-1:
         if mapData[i+1][2] < mapData[i][2]:
@@ -25,7 +33,8 @@ def fix_map(mapData):
 def save_map(mapAddr,mapArray):
         with open(mapAddr,'w') as mapFile:
             for mapItem in mapArray:
-                mapFile.write('\t'.join([str(item) for item in mapItem])+'\n')
+                mapFile.write('\t'.join([str(mapItem[0]),mapItem[1].decode('unicode'),
+                    str(mapItem[2]),str(mapItem[3])])+'\n')
 def load_hap_data(hap_addr):
     haps = {}
     meta = {}
