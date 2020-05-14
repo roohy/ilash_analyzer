@@ -285,7 +285,7 @@ def save_hap(data,file_name):
             output.write(str(int(data[data.shape[0]-1,data.shape[1]-1]))+'\n')
     
 
-def load_ilash_for_power(file_name,pos_dic,min_length=1.0,min_acc=0.0):
+def load_ilash_for_power(file_name,pos_dic,min_length=1.0,min_acc=0.0,mode='normal'):
     
     count = 0
     match_list = {}
@@ -300,8 +300,12 @@ def load_ilash_for_power(file_name,pos_dic,min_length=1.0,min_acc=0.0):
                 continue
             count += 1
             total_length += temp_item[2]
-            data[1] = int(data[1][:-2])*2 + int(data[1][-1])
-            data[3] = int(data[3][:-2])*2 + int(data[3][-1])
+            if mode == 'normal':
+                data[1] = int(data[1][:-2])*2 + int(data[1][-1])
+                data[3] = int(data[3][:-2])*2 + int(data[3][-1])
+            elif mode == 'individual':
+                data[1] = int(data[1][:-2])
+                data[3] = int(data[3][:-2])
             
             if data[1] in match_list:
                 if data[3] in match_list[data[1]]:
@@ -369,7 +373,7 @@ def load_beagle_for_power(addr,pos_dic,map_data, min_length=2.75,diploid=True):
     return match_list,count,total_length
 
 
-def load_ribd_for_power(file_name,pos_dic,min_length=1.0):
+def load_ribd_for_power(file_name,pos_dic,min_length=1.0,mode='normal'):
     
     count = 0
     match_list = {}
@@ -384,8 +388,12 @@ def load_ribd_for_power(file_name,pos_dic,min_length=1.0):
                 continue
             count += 1
             total_length += temp_item[2]
-            data[1] = int(data[0])*2 + int(data[1])-1
-            data[3] = int(data[2])*2 + int(data[3])-1
+            if mode == 'normal':
+                data[1] = int(data[0])*2 + int(data[1])-1
+                data[3] = int(data[2])*2 + int(data[3])-1
+            elif mode == 'individual':
+                data[1] = int(data[0])
+                data[3] = int(data[2])
             
             if data[1] in match_list:
                 if data[3] in match_list[data[1]]:
@@ -411,7 +419,7 @@ def load_ribd_for_power(file_name,pos_dic,min_length=1.0):
 
     return match_list,count,total_length
 
-def load_germline_for_power(addr,pos_dic, min_length=1.0):
+def load_germline_for_power(addr,pos_dic, min_length=1.0,mode='normal'):
     count = 0
     flag = False
     total_length = 0
@@ -420,16 +428,21 @@ def load_germline_for_power(addr,pos_dic, min_length=1.0):
         for line in germFile:
             flag = False
             data = line.split()
-            if data[1][-1] == '1':
-                sign = '1'
-            else:
-                sign = '0'
-            if data[3][-1] == '1':
-                sign2 = '1'
-            else:
-                sign2 = '0'
-            id1 = 2*int(data[1][:-2]) + int(sign)
-            id2 = 2*int(data[3][:-2]) + int(sign2)
+            id1 = id2 = None
+            if mode == 'normal':
+                if data[1][-1] == '1':
+                    sign = '1'
+                else:
+                    sign = '0'
+                if data[3][-1] == '1':
+                    sign2 = '1'
+                else:
+                    sign2 = '0'
+                id1 = 2*int(data[1][:-2]) + int(sign)
+                id2 = 2*int(data[3][:-2]) + int(sign2)
+            elif mode == 'individual':
+                id1 = int(data[1][:-2]) 
+                id2 = int(data[3][:-2]) 
             temp_item = [pos_dic[int(data[5])], pos_dic[int(data[6])],float(data[10])]
             if temp_item[2] < min_length:
                 continue
@@ -553,6 +566,41 @@ def load_beagle_length(addr,pos_dic,map_data, min_length=2.75):
             total_length += genetic_dist
     return count,total_length
     
+#dictSize should be in haps since the input is haplotype based. 
+def change_hap_dict(refDictList,dictSize,indCount):
+    hapCount = 2*indCount
+    dictToTraverse = hapCount//dictSize
+    if hapCount%dictSize == 0 :
+        dictToTraverse -= 1 
+    resultDictList = []
+    for i in range(dictToTraverse+1):
+        tempDict = {}
+        for key1 in refDictList[i]:
+            if key1+(i*dictSize) > hapCount:
+                continue
+            for key2 in refDictList[i][key1]:
+                if key2+(i*dictSize) > hapCount:
+                    continue
+                tempTractList = refDictList[i][key1][key2]
+                tkey1 = key1//2
+                tkey2 = key2//2
+                if tkey1 not in tempDict and tkey2 not in tempDict:
+                    tempDict[tkey1] = {tkey2:tempTractList}
+                elif tkey2 not in tempDict:
+                    if tkey2 in tempDict[tkey1]:
+                        tempDict[tkey1][tkey2] += tempTractList
+                    else:
+                        tempDict[tkey1][tkey2] = tempTractList
+                elif tkey1 not in tempDict:
+                    if tkey1 in tempDict[tkey2]:
+                        tempDict[tkey2][tkey1] += tempTractList
+                    else:
+                        tempDict[tkey2][tkey1] = tempTractList
+        resultDictList.append(tempDict)
+    return resultDictList
+                
+
+        
 
 
 def check_sim_ibd(fam_dic,match_dic):
