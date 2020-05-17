@@ -597,7 +597,12 @@ def change_hap_dict(refDictList,dictSize,indCount):
                     else:
                         tempDict[tkey2][tkey1] = tempTractList
                 else:
-                    print("WHAT")
+                    if tkey2 in tempDict[tkey1]:
+                        tempDict[tkey1][tkey2] += 1
+                    elif tkey1 in tempDict[tkey2]:
+                        tempDict[tkey2][tkey1] += 1 
+                    else:
+                        tempDict[tkey1][tkey2] = 1
         resultDictList.append(tempDict)
     return resultDictList
                 
