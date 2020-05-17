@@ -596,11 +596,13 @@ def change_hap_dict(refDictList,dictSize,indCount):
                         tempDict[tkey2][tkey1] += tempTractList
                     else:
                         tempDict[tkey2][tkey1] = tempTractList
+                else:
+                    print("WHAT")
         resultDictList.append(tempDict)
     return resultDictList
                 
 
-        
+
 
 
 def check_sim_ibd(fam_dic,match_dic):
