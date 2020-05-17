@@ -35,7 +35,7 @@ def simple_concordance(match_dic,ref_dic,map_data,threshold):
             else:
                 pass
     return overlap_count
-def individual_comparison(ref_dict,dict_list,map_data,hap_count,dict_size,output_address,rapid_ind=-1):
+def individual_comparison(ref_dict,dict_list,map_data,hap_count,dict_size,output_address,rapid_ind=-1,ignore_list=None):
     result = []
     dict_to_travers = hap_count//dict_size
     if hap_count%dict_size == 0 :
@@ -47,6 +47,11 @@ def individual_comparison(ref_dict,dict_list,map_data,hap_count,dict_size,output
             for key2 in ref_dict[i][key1]:
                 if key2+(i*dict_size) > hap_count:
                     continue
+                if ignore_list is not None:
+                    if key1 in ignore_list[i] and key2 in ignore_list[i][key1]:
+                        continue
+                    elif key2 in ignore_list[i] and key1 in ignore_list[i][key2]:
+                        continue
                 total_pair_length = 0
                 temp_res_item = []
                 for tract in ref_dict[i][key1][key2]:
