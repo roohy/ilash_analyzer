@@ -49,8 +49,10 @@ def individual_comparison(ref_dict,dict_list,map_data,hap_count,dict_size,output
                     continue
                 if ignore_list is not None:
                     if key1 in ignore_list[i] and key2 in ignore_list[i][key1]:
+                        print("ehem")
                         continue
                     elif key2 in ignore_list[i] and key1 in ignore_list[i][key2]:
+                        print('ehem')
                         continue
                 total_pair_length = 0
                 temp_res_item = []
