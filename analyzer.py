@@ -85,7 +85,8 @@ def individual_comparison(ref_dict,dict_list,map_data,hap_count,dict_size,output
                         for tract in temp_list:
                             total_pair_handle += map_data[tract[1]][2]-map_data[tract[0]][2]
                     temp_res_item.append(total_pair_handle)
-                result.append(temp_res_item)  
+                result.append(temp_res_item+[tkey1,tkey2])  
+                
     print('{} out of a total of {} pairs were ignored.'.format(ignoreCounter,totalCounter))
     return result
                 
