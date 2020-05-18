@@ -51,12 +51,16 @@ def individual_comparison(ref_dict,dict_list,map_data,hap_count,dict_size,output
                     continue
                 totalCounter += 1 
                 if ignore_list is not None:
-                    if key1 in ignore_list[i] and key2 in ignore_list[i][key1]:
-                        ignoreCounter += 1
-                        continue
-                    elif key2 in ignore_list[i] and key1 in ignore_list[i][key2]:
-                        ignoreCounter += 1
-                        continue
+                    tkey1 = key1//2
+                    tkey2 = key2//2
+                    if tkey1 in ignore_list[i] and tkey2 in ignore_list[i][tkey1]:
+                        if ignore_list[i][tkey1][tkey2]>1:
+                            ignoreCounter += 1
+                            continue
+                    elif tkey2 in ignore_list[i] and tkey1 in ignore_list[i][tkey2]:
+                        if ignore_list[i][tkey2][tkey1]>1:
+                            ignoreCounter += 1
+                            continue
                 total_pair_length = 0
                 temp_res_item = []
                 for tract in ref_dict[i][key1][key2]:
@@ -85,7 +89,7 @@ def individual_comparison(ref_dict,dict_list,map_data,hap_count,dict_size,output
                         for tract in temp_list:
                             total_pair_handle += map_data[tract[1]][2]-map_data[tract[0]][2]
                     temp_res_item.append(total_pair_handle)
-                    
+
                 result.append(temp_res_item+[tkey1,tkey2])  
                 
     print('{} out of a total of {} pairs were ignored.'.format(ignoreCounter,totalCounter))
