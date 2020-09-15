@@ -1,3 +1,9 @@
+'''This file should be edited locally. The functions in this file get a chormosome
+number and return file addresses for iLASH and GERMLINE outputs. Prefixes, suffixes,
+ and functions should be edited based on your file structure.
+ I suggest ignoring this file completely and writing your own 
+ traversal script from scratch.'''
+
 map_data_prefix = "/lfs1/ibd/belbig01/for_jose-luis/PAGEII_Chr"
 map_data_suffix = ".phased.filtered.map3"
 hap_data_prefix = map_data_prefix

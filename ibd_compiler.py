@@ -1,3 +1,7 @@
+'''This file simulates IBD for our experiments. We first use HapGen to simulate
+the genotype data and get Hap files and genetic distance files (a legend file and a genetic 
+distance file). 
+'''
 import numpy as np
 
 dt = np.dtype('uint8')
