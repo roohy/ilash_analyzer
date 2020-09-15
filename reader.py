@@ -50,6 +50,8 @@ def load_hap_data(hap_addr):
             meta[data[1] + '_1'] = data[0]
     return haps,meta
 
+
+
 def full_hap_loader_disjoint(base_addr,addr_suffix,count,base_map_addr,map_addr_suffix):
     dna_length = 0
     chr_bounds = {}
