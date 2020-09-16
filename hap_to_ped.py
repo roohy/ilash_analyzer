@@ -1,6 +1,7 @@
 import numpy as np
+import sys
 
-def load_haps(hapAddr,size,dim,outputAddr):
+def convert_haps(hapAddr,size,dim,outputAddr):
     print("making the matrix")
     haps = np.zeros((size*2,dim),dtype=np.dtype('uint8'))
     counter= 0
@@ -24,3 +25,10 @@ def load_haps(hapAddr,size,dim,outputAddr):
                 output.write(haps[2*i +1,j]+' ')
             output.write(haps[haps.shape[0]-2,haps.shape[1]-1]+' ')
             output.write(haps[haps.shape[0]-1,haps.shape[1]-1]+'\n')
+
+if __name__ == '__main__':
+    inputAddr = sys.argv[1]
+    size = int(sys.argv[2])
+    dim = int(sys.argv[3])
+    outputAddr = sys.argv[4]
+    convert_haps(inputAddr,size,dim,outputAddr)
