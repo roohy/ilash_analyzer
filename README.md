@@ -1,3 +1,4 @@
+[![DOI](https://zenodo.org/badge/99180451.svg)](https://zenodo.org/badge/latestdoi/99180451)
 # iLASH Analyzer
 
 This repository includes nearly all the script we used to evaluate [iLASH, our IBD estimation tool](https://github.com/roohy/iLASH). Each file has brief commentary about the code inside. Here, we go through files that were critical to our evaluation process.

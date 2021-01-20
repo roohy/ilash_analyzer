@@ -1,5 +1,5 @@
 import numpy as np
-from sklearn.metrics import jaccard_similarity_score
+# from sklearn.metrics import jaccard_similarity_score
 
 
 def simple_concordance(match_dic,ref_dic,map_data,threshold):
@@ -202,11 +202,11 @@ def add_concordance(match_dic,ref_dic,map_data,threshold):
 
 #def jackard_sim(id1,id2,)
 
-def add_jaccard_to_dic(match_dic,hap_data,shingler,shingle_size,overlap):
-    for ind1, key1 in enumerate(match_dic):
-        for ind2, key2 in enumerate(match_dic[key1]):
-            for tract in match_dic[key1][key2]:
-                tract.append(jaccard_similarity_score(shingler(hap_data[key1][tract[0]:tract[1]],shingle_size,overlap),shingler(hap_data[key2][tract[0]:tract[1]],shingle_size,overlap)))
+# def add_jaccard_to_dic(match_dic,hap_data,shingler,shingle_size,overlap):
+#     for ind1, key1 in enumerate(match_dic):
+#         for ind2, key2 in enumerate(match_dic[key1]):
+#             for tract in match_dic[key1][key2]:
+#                 tract.append(jaccard_similarity_score(shingler(hap_data[key1][tract[0]:tract[1]],shingle_size,overlap),shingler(hap_data[key2][tract[0]:tract[1]],shingle_size,overlap)))
 
 
 def load_check_rapid(hap_data,map_data,pos_dic,input_addr):
