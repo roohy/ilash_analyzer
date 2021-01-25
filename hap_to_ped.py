@@ -12,7 +12,7 @@ def convert_haps(hapAddr,size,dim,outputAddr):
             if flag:
                 flag = False
                 continue
-            haps[:,counter] = np.fromstring(line,dtype=int,sep=' ')
+            haps[:,counter] = np.fromstring(line,dtype=int,sep=' ')[5:]
             counter += 1
     print("File is loaded")
     haps[haps == 0] = 2
