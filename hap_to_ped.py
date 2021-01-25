@@ -4,15 +4,18 @@ import sys
 def convert_haps(hapAddr,size,dim,outputAddr):
     print("making the matrix")
     haps = np.zeros((size*2,dim),dtype=np.dtype('uint8'))
+    
     counter= 0
     flag = True
     print("opening the file")
     with open(hapAddr,'r') as file:
         for line in file:
-            if flag:
-                flag = False
-                continue
-            haps[:,counter] = np.fromstring(line,dtype=int,sep=' ')[5:]
+            # if flag:
+            #     flag = False
+            #     continue
+            # print(np.fromstring(line,dtype=int,sep=' ').shape,haps.shape)
+            temp_haps = line.strip().split()[5:]
+            haps[:,counter] = [int(item) for item in temp_haps]#np.fromstring(line,dtype=np.dtype('uint8'),sep=' ')[5:]
             counter += 1
     print("File is loaded")
     haps[haps == 0] = 2
