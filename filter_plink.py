@@ -17,7 +17,7 @@ def load_map_data(map_addr,gen_pos=False):
 def make_filter(map_addr,new_map_addr):
     map_data,pos_dic = load_map_data(map_addr,gen_pos=True)
     new_map_data = load_map_data(new_map_addr)
-    filter = np.zeros((new_map_data.shape[0]))
+    filter = np.zeros((new_map_data.shape[0]),dtype=np.int)
     for index,item in enumerate(new_map_data):
         filter[index] = pos_dic[item[3]]
     filter = 2*filter
@@ -46,4 +46,3 @@ def main(ped_addr,map_addr,new_map_addr,output_addr):
 
 if __name__ == '__main__':
     main(sys.argv[1],sys.argv[2],sys.argv[3],sys.argv[4])
-    

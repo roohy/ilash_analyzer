@@ -1,0 +1,10 @@
+#!/bin/bash 
+#SBATCH --ntasks=1
+#SBATCH --time=10:00:00
+#SBATCH --cpus-per-task=28
+
+#source /usr/usc/python/anaconda3/setup.sh
+#cd /auto/rcf-proj/ta/rshemira/
+#python3 cut_to_chr.py
+cd /home/rcf-40/rshemira/IBD/
+./build/IBD test
