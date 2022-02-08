@@ -48,5 +48,5 @@ if __name__ == '__main__':
                     interpolated_d = prevd + (frac*(map_distances[sindex]-prevd))
                     write_to_file(output_file,chrm,ids[mindex],interpolated_d,position)
             elif sindex == len(map_positions)-1:
-                    write_to_file(output_file,chrm,ids[mindex],map_positions[-1],position)
+                    write_to_file(output_file,chrm,ids[mindex],map_distances[-1],position)
         
