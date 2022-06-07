@@ -20,19 +20,29 @@ def read_hap(hap_addr,sample_count,snp_count):
     with gzip.open(hap_addr,'rb') as hap_file:
         for index,line in enumerate(hap_file):
             data = line.decode().strip().split()
-            snp_ids.append(data[0])
-            positions.append(int(data[1]))
+            snp_ids.append(data[1])
+            positions.append(int(data[2]))
             genotypes[index,:] = list(map(lambda x: '1' if x == '0' else '2', data[5:]))
+    
     return genotypes,snp_ids,positions
-def load_reference_map(genetic_map_addr):
+def load_reference_map(genetic_map_addr,chr_num):
     ref_positions = []
-    ref_distances = []        
+    ref_distances = []       
+    chr_flag = False 
+    chr_num = str(chr_num)
     with gzip.open(genetic_map_addr,'rb') as genmap_file:
         line = genmap_file.readline()
         for line in genmap_file:
-            data = line.decode().strip().split()
-            ref_positions.append(int(data[1]))
-            ref_distances.append(float(data[3]))
+            line = line.decode()
+            if line.startswith(chr_num):
+                if not chr_flag:
+                    chr_flag = True
+                data = line.strip().split()
+                ref_positions.append(int(data[1]))
+                ref_distances.append(float(data[3]))
+            elif chr_flag:
+                break
+            
     return ref_distances,ref_positions
 
 
@@ -90,7 +100,7 @@ def main():
     genotypes,snp_ids,positions = read_hap(hap_addr,sample_count,snp_count)
     write_ped(output_addr+'.ped',genotypes,ids)
     del genotypes
-    ref_distances,ref_positions = load_reference_map(genetic_map_addr)
+    ref_distances,ref_positions = load_reference_map(genetic_map_addr,chr_num)
     map_list = interpolate_map(positions,snp_ids,ref_distances,ref_positions)
     map_to_file(map_list,output_addr+'.map',chr_num)
 
